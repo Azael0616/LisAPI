@@ -4,6 +4,7 @@ namespace LisAPI.DAL.Interfaces
 {
     public interface ISqlAuxiliar
     {
-        public DataTable EjecutarTablaProcedimientoAlmacenado(string procedimientoAlmacenado, Dictionary<string, object>? parametros = null);
+        public DataTable EjecutarTablaPA(string procedimientoAlmacenado, Dictionary<string, object>? parametros = null);
+        public DataRow EjecutarPrimeraFilaPA(string procedimientoAlmacenado, Dictionary<string, object>? parametros = null);
     }
 }

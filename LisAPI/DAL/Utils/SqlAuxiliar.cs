@@ -10,7 +10,8 @@ namespace LisAPI.DAL.Utils
         {
             _cadena_de_conexion = cadena_de_conexion;
         }
-        public DataTable EjecutarTablaProcedimientoAlmacenado(string procedimientoAlmacenado, Dictionary<string, object>? parametros = null)
+        //Obtiene toda la tabla
+        public DataTable EjecutarTablaPA(string procedimientoAlmacenado, Dictionary<string, object>? parametros = null)
         {
             DataTable dt = new DataTable();
 
@@ -38,6 +39,18 @@ namespace LisAPI.DAL.Utils
             }
 
             return dt;
-        }    
+        }
+        //Obtiene la primer fila
+#nullable disable
+        public DataRow EjecutarPrimeraFilaPA(string nombreProcedimiento, Dictionary<string, object> parametros)
+        {
+            DataTable dt = EjecutarTablaPA(nombreProcedimiento, parametros);
+
+            if (dt.Rows.Count == 0)
+                return null;
+
+            return dt.Rows[0];
+        }
+#nullable enable
     }
 }
