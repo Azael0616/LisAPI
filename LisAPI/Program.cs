@@ -1,7 +1,21 @@
+using LisAPI.DAL;
+using LisAPI.DAL.Interfaces;
+using LisAPI.DAL.Utils;
+using Microsoft.AspNetCore.Mvc.Routing;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Obtener la cadena de conexión desde la configuración
+string? cadena_de_conexion = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Registrar la DAL en el DI
+builder.Services.AddSingleton<ISqlAuxiliar>(new SqlAuxiliar(cadena_de_conexion));
+
+// Registrar la BLL, pasando la DAL (inyección automática)
+builder.Services.AddScoped<IOperadorDAL,OperadorDAL>();
 
 var app = builder.Build();
 
@@ -17,8 +31,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Prueba}/{action=Index}/{id?}");
+app.MapControllers();
+
+app.MapGet("/", () => Results.Json(new { status = "API CORRIENDO", version = "v1" }));
 
 app.Run();
