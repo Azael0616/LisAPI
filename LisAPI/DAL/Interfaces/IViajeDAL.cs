@@ -1,4 +1,5 @@
 ﻿using LisAPI.Models;
+using LisAPI.Models.DTO;
 
 namespace LisAPI.DAL.Interfaces
 {
@@ -9,6 +10,8 @@ namespace LisAPI.DAL.Interfaces
         public List<Estado> ObtenerEstados(int paisID);
         public List<Municipio> ObtenerMunicipios(int estadoID);
         public ResultadoBD InsertarViaje(Viaje viaje);
+        public ResultadoBD ModificarViaje(Viaje viaje);
         public List<TipoEstatus> ObtenerTipoEstatus();
+        public List<ViajeDTO> ObtenerViajes();
     }
 }

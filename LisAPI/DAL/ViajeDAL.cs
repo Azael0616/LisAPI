@@ -1,5 +1,6 @@
 ﻿using LisAPI.DAL.Interfaces;
 using LisAPI.Models;
+using LisAPI.Models.DTO;
 using System.Data;
 
 namespace LisAPI.DAL
@@ -118,6 +119,49 @@ namespace LisAPI.DAL
 
             return resultado;
         }
+        public ResultadoBD ModificarViaje(Viaje _viaje)
+        {
+            ResultadoBD resultado = new ResultadoBD();
+#nullable disable
+            var parameters = new Dictionary<string, object>
+            {
+                { "@OperadorID", _viaje.OperadorID },
+                { "@Fecha_inicio", _viaje.Fecha_inicio },
+                { "@Fecha_fin", _viaje.Fecha_fin },
+                { "@UsuarioID_insercion", _viaje.UsuarioID_insercion },
+                { "@Calle_o", _viaje.Calle_o },
+                { "@Colonia_o", _viaje.Colonia_o },
+                { "@Numero_exterior_o", _viaje.Numero_exterior_o },
+                { "@Numero_interior_o", _viaje.Numero_interior_o },
+                { "@PaisID_o", _viaje.PaisID_o },
+                { "@EstadoID_o", _viaje.EstadoID_o },
+                { "@MunicipioID_o", _viaje.MunicipioID_o },
+                { "@Calle_d", _viaje.Calle_d },
+                { "@Colonia_d", _viaje.Colonia_d },
+                { "@Numero_exterior_d", _viaje.Numero_exterior_d },
+                { "@Numero_interior_d", _viaje.Numero_interior_d },
+                { "@PaisID_d", _viaje.PaisID_d },
+                { "@EstadoID_d", _viaje.EstadoID_d },
+                { "@MunicipioID_d", _viaje.MunicipioID_d },
+                { "@ViajeID", _viaje.ViajeID },
+                { "@TipoEstatusID", _viaje.TipoEstatusID },
+            };
+
+            DataRow dt = _sqlAuxiliar.EjecutarPrimeraFilaPA("Sp_Viaje_Modificacion", parameters);
+
+            if (dt == null)
+                return resultado;
+            else
+            {
+
+                resultado.Error = Convert.ToBoolean(dt["Error"]);
+                resultado.ErrorDesc = dt["ErrorDesc"] != null ? dt["ErrorDesc"].ToString() : "";
+                resultado.Icon = dt["Icon"] != null ? dt["Icon"].ToString() : "";
+#nullable enable
+            }
+
+            return resultado;
+        }
         public List<TipoEstatus> ObtenerTipoEstatus()
         {
             List<TipoEstatus> lista = new List<TipoEstatus>();
@@ -129,6 +173,20 @@ namespace LisAPI.DAL
             else
             {
                 lista = TipoEstatus.ObtenerListaDesdeTabla(dt);
+            }
+            return lista;
+        }
+        public List<ViajeDTO> ObtenerViajes()
+        {
+            List<ViajeDTO> lista = new List<ViajeDTO>();
+
+            DataTable dt = _sqlAuxiliar.EjecutarTablaPA("Sp_Viaje_ObtenerTabla", null);
+
+            if (dt.Rows.Count == 0)
+                return lista;
+            else
+            {
+                lista = ViajeDTO.ObtenerListaDesdeTabla(dt);
             }
             return lista;
         }

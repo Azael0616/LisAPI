@@ -1,5 +1,6 @@
 ﻿using LisAPI.DAL.Interfaces;
 using LisAPI.Models;
+using LisAPI.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LisAPI.Controllers
@@ -54,6 +55,20 @@ namespace LisAPI.Controllers
             ResultadoBD _resultado = new ResultadoBD();
             _resultado = _viajeServicio.InsertarViaje(viaje);
             return Ok(_resultado);
+        }
+        [HttpPost("ModificarViaje")]
+        public IActionResult ModificarViaje(Viaje viaje)
+        {
+            ResultadoBD _resultado = new ResultadoBD();
+            _resultado = _viajeServicio.ModificarViaje(viaje);
+            return Ok(_resultado);
+        }
+        [HttpGet("ObtenerViajes")]
+        public IActionResult ObtenerViajes()
+        {
+            List<ViajeDTO> lista = new List<ViajeDTO>();
+            lista = _viajeServicio.ObtenerViajes();
+            return Ok(lista);
         }
     }
 }
