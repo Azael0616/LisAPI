@@ -86,8 +86,7 @@ namespace LisAPI.DAL
             {
                 { "@OperadorID", _viaje.OperadorID },
                 { "@Fecha_inicio", _viaje.Fecha_inicio },
-                { "@Fecha_fin", _viaje.Fecha_fin },
-                { "@UsuarioID_insercion", _viaje.UsuarioID_insercion },
+                { "@Fecha_fin", _viaje.Fecha_fin },                
                 { "@Calle_o", _viaje.Calle_o },
                 { "@Colonia_o", _viaje.Colonia_o },
                 { "@Numero_exterior_o", _viaje.Numero_exterior_o },
@@ -102,6 +101,7 @@ namespace LisAPI.DAL
                 { "@PaisID_d", _viaje.PaisID_d },
                 { "@EstadoID_d", _viaje.EstadoID_d },
                 { "@MunicipioID_d", _viaje.MunicipioID_d },
+                { "@UsuarioID_insercion", 1 },
             };
 
             DataRow dt = _sqlAuxiliar.EjecutarPrimeraFilaPA("Sp_Viaje_Insercion", parameters);
@@ -127,8 +127,7 @@ namespace LisAPI.DAL
             {
                 { "@OperadorID", _viaje.OperadorID },
                 { "@Fecha_inicio", _viaje.Fecha_inicio },
-                { "@Fecha_fin", _viaje.Fecha_fin },
-                { "@UsuarioID_insercion", _viaje.UsuarioID_insercion },
+                { "@Fecha_fin", _viaje.Fecha_fin },                
                 { "@Calle_o", _viaje.Calle_o },
                 { "@Colonia_o", _viaje.Colonia_o },
                 { "@Numero_exterior_o", _viaje.Numero_exterior_o },
@@ -143,8 +142,8 @@ namespace LisAPI.DAL
                 { "@PaisID_d", _viaje.PaisID_d },
                 { "@EstadoID_d", _viaje.EstadoID_d },
                 { "@MunicipioID_d", _viaje.MunicipioID_d },
-                { "@ViajeID", _viaje.ViajeID },
-                { "@TipoEstatusID", _viaje.TipoEstatusID },
+                { "@ViajeID", _viaje.ViajeID },                
+                { "@UsuarioID_modificacion", 1 },
             };
 
             DataRow dt = _sqlAuxiliar.EjecutarPrimeraFilaPA("Sp_Viaje_Modificacion", parameters);
@@ -189,6 +188,23 @@ namespace LisAPI.DAL
                 lista = ViajeDTO.ObtenerListaDesdeTabla(dt);
             }
             return lista;
+        }
+        public Viaje ObtenerViajePorID(int Id)
+        {
+            Viaje _viaje;
+            var parameters = new Dictionary<string, object>
+            {
+                { "@ViajeID", Id },                
+            };
+            DataTable dt = _sqlAuxiliar.EjecutarTablaPA("Sp_Viaje_ObtenerPorID", parameters);
+
+            if (dt.Rows.Count == 0)
+                return new Viaje();
+            else
+            {
+                _viaje = new Viaje(dt.Rows[0]);
+            }
+            return _viaje;
         }
     }
 }

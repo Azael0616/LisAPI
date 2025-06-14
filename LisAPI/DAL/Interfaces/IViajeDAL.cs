@@ -13,5 +13,6 @@ namespace LisAPI.DAL.Interfaces
         public ResultadoBD ModificarViaje(Viaje viaje);
         public List<TipoEstatus> ObtenerTipoEstatus();
         public List<ViajeDTO> ObtenerViajes();
+        public Viaje ObtenerViajePorID(int Id);
     }
 }

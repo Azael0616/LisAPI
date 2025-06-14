@@ -28,14 +28,14 @@ namespace LisAPI.Controllers
             lista = _viajeServicio.ObtenerPaises();
             return Ok(lista);
         }
-        [HttpGet("ObtenerEstados/{id}")]
+        [HttpGet("ObtenerEstados")]
         public IActionResult ObtenerEstados(int id)
         {
             List<Estado> lista = new List<Estado>();
             lista = _viajeServicio.ObtenerEstados(id);
             return Ok(lista);
         }
-        [HttpGet("ObtenerMunicipios/{id}")]
+        [HttpGet("ObtenerMunicipios")]
         public IActionResult ObtenerMunicipios(int id)
         {
             List<Municipio> lista = new List<Municipio>();
@@ -69,6 +69,13 @@ namespace LisAPI.Controllers
             List<ViajeDTO> lista = new List<ViajeDTO>();
             lista = _viajeServicio.ObtenerViajes();
             return Ok(lista);
+        }
+        [HttpGet("ObtenerViajePorId")]
+        public IActionResult ObtenerViajePorId(int Id)
+        {
+            Viaje _viaje = new Viaje();
+            _viaje = _viajeServicio.ObtenerViajePorID(Id);
+            return Ok(_viaje);
         }
     }
 }
